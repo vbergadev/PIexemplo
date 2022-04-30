@@ -32,10 +32,12 @@ app.use(bodyParser.json()); // para APIs
 app.get("/",(req, res) => {
     res.render("./main/register.ejs");
 });
-
-app.get("/ask", (req,res) => {
-    res.render("ask")
-})
+app.get("/login",(req, res) => {
+    res.render("./main/login.ejs");
+});
+app.get("/profile",(req, res) => {
+    res.render("./main/profile.ejs");
+});
 
 app.post("/saveuser", async (req, res) => {
     // precisa do bodyParser
@@ -48,12 +50,29 @@ app.post("/saveuser", async (req, res) => {
         age: age,
         password: hashpassword
     }).then(() => {
-        res.redirect("/login")
+        console.log("ok")
     }).catch((error) => {
         console.log(error)
     })
 
-    res.send(`${name} ${email} ${age} ${password}`)
+    res.redirect("/login")
+});
+app.post("/authuser", async (req, res) => {
+    // precisa do bodyParser
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+        console.log('Not found!');
+    } else {
+        const checkPassword = bcrypt.compare(password, user.password).then((result) => {
+            return result
+        })
+        if(checkPassword && email == user.email) {         
+            res.redirect("/profile")
+        }
+    }
+
 });
 
 app.listen(3000,()=>{console.log("O pai TA on!");});
