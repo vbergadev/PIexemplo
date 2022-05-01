@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
-const bcrypt = require('bcrypt');
 const connection = require("../database");
 
-const tableName = 'user'
+const tableName = 'user';
+
 const user = {
   name: {
     type: Sequelize.STRING,
