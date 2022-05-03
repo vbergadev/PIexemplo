@@ -4,11 +4,11 @@ const app = express();
 
 const bodyParser = require("body-parser");
 
-const bcrypt = require('bcrypt');
-
 const connection = require("./database/database");
 
 const User = require("./database/models/User");
+
+const saveUser = require('./controller/userController')
 
 const session = require('express-session');
 
@@ -52,24 +52,24 @@ app.post("/saveuser", saveUser);
 app.post("/authuser", login);
 
 // Controller
-async function saveUser (req, res) {
-    // precisa do bodyParser
-    const { name, email, age, password } = req.body;
-    const saltRounds = 8;
-    const hashpassword = await bcrypt.hash(password, saltRounds);
-    User.create({
-        name: name,
-        email: email,
-        age: age,
-        password: hashpassword
-    }).then(() => {
-        console.log("ok")
-    }).catch((error) => {
-        console.log(error)
-    })
+// async function saveUser (req, res) {
+//     // precisa do bodyParser
+//     const { name, email, age, password } = req.body;
+//     const saltRounds = 8;
+//     const hashpassword = await bcrypt.hash(password, saltRounds);
+//     User.create({
+//         name: name,
+//         email: email,
+//         age: age,
+//         password: hashpassword
+//     }).then(() => {
+//         console.log("ok")
+//     }).catch((error) => {
+//         console.log(error)
+//     })
 
-    res.redirect("/login")
-}
+//     res.redirect("/login")
+// }
 
 async function login(req, res){
 

@@ -1,5 +1,5 @@
 {
-  "name": "Exemplo Login",
+  "name": "login",
   "version": "1.0.0",
   "description": "Uma plataforma de perguntas e respostas ao estilo Yahoo respostas",
   "main": "index.js",
